@@ -25,11 +25,20 @@ class SmartWrapTest extends TestCase
     function test_boot_empties_lines_each_smartwrap_call()
     {
         $input    = 'something to wrap';
-        $expected = "something\n" .
-                    "to wrap";
+        $expected = "something\nto wrap";
 
         $this->sw->smartwrap($input, 10);
         $output = $this->sw->smartwrap($input, 10);
+
+        $this->assertEquals($expected, $output);
+    }
+
+    function test_break_is_considered()
+    {
+        $input    = 'something to wrap';
+        $expected = "something@to wrap";
+
+        $output = $this->sw->smartwrap($input, 10, '@');
 
         $this->assertEquals($expected, $output);
     }
@@ -63,6 +72,21 @@ class SmartWrapTest extends TestCase
             ],
             [
                 [
+                    'input'    => 'Также производит все типы жира и смазок и их побочных',
+                    'expected' => "Также\n" .
+                                  "производит\n" .
+                                  "все типы\n" .
+                                  "жира и\n" .
+                                  "смазок и\n" .
+                                  "их\n" .
+                                  "побочных",
+                    'width'    => 10,
+                    'break'    => "\n",
+                    'cut'      => false
+                ]
+            ],
+            [
+                [
                     'input'    => 'The coronavirus is spread all over the world',
                     'expected' => "The coronavi\n" .
                                   "rus is sprea\n" .
@@ -80,6 +104,18 @@ class SmartWrapTest extends TestCase
                                   "of infrastru\n" .
                                   "ctures",
                     'width'    => 12,
+                    'break'    => "\n",
+                    'cut'      => true
+                ]
+            ],
+            [
+                [
+                    'input'    => 'Cras cursus condimentumis ipsum quis facilis',
+                    'expected' => "Cras cursus\n" .
+                                  "condimentum\n" .
+                                  "is ipsum qu\n" .
+                                  "is facilis",
+                    'width'    => 11,
                     'break'    => "\n",
                     'cut'      => true
                 ]
