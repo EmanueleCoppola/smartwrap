@@ -49,7 +49,7 @@ class SmartWrap
             $lastLineSpace = $width - mb_strlen($this->lastLine);
 
             // If the word fits the line spaces.
-            if($lastLineSpace > $wordLength₁) {
+            if($lastLineSpace > $wordLength₁ || (($lastLineSpace == $width) && ($lastLineSpace == $wordLength₁))) {
                 $this->addText($word₁);
             } else {
                 // If the word is longer than the max line width.

@@ -72,6 +72,17 @@ class SmartWrapTest extends TestCase
                     'break'    => "\n",
                     'cut'      => true
                 ]
+            ],
+            [
+                [
+                    'input'    => 'Availability of infrastructures',
+                    'expected' => "Availability\n" .
+                                  "of infrastru\n" .
+                                  "ctures",
+                    'width'    => 12,
+                    'break'    => "\n",
+                    'cut'      => true
+                ]
             ]
         ];
     }
