@@ -23,6 +23,18 @@ class SmartWrapTest extends TestCase
         $this->sw = new SmartWrap();
     }
 
+    function test_global_smartwrap_function_is_registered_and_working()
+    {
+        $this->assertTrue(function_exists('smartwrap'));
+
+        $input    = 'something to wrap';
+        $expected = "something\nto wrap";
+
+        $output = $this->sw->smartwrap($input, 10);
+
+        $this->assertEquals($expected, $output);
+    }
+
     function test_boot_empties_lines_each_smartwrap_call()
     {
         $input    = 'something to wrap';
