@@ -45,7 +45,7 @@ class SmartWrap
         $words₁ = $this->tokenizeText($text);
 
         foreach ($words₁ as $word₁) {
-            $wordLength₁    = mb_strlen($word₁);
+            $wordLength₁   = mb_strlen($word₁);
             $lastLineSpace = $width - mb_strlen($this->lastLine);
 
             // If the word fits the line spaces.
@@ -55,14 +55,16 @@ class SmartWrap
                 // If the word is longer than the max line width.
                 // Or if we should always cut it.
                 if($wordLength₁ > $width || $cut) {
-                    $words₂ = $this->tokenizeWord($word₁, $width, $lastLineSpace - 1);
+                    $start = $lastLineSpace == $width ? 0 : $lastLineSpace - 1;
+
+                    $words₂ = $this->tokenizeWord($word₁, $width, $start);
 
                     foreach ($words₂ as $word₂) {
                         $wordLength₂   = mb_strlen($word₂);
                         $lastLineSpace = $width - mb_strlen($this->lastLine);
 
-                        // If the word doesn't fit the line spaces.
-                        if($lastLineSpace > $wordLength₂) {
+                        // If the word fits the line spaces.
+                        if($lastLineSpace > $wordLength₂ || (($lastLineSpace == $width) && ($lastLineSpace == $wordLength₂))) {
                             $this->addText($word₂);
                         } else {
                             $this->addLine($word₂);
@@ -118,7 +120,7 @@ class SmartWrap
         if($start < 0) $start = 0;
         if($start > $wordLength) $start = $wordLength;
 
-        if($start) {
+        if($start && $start > 0) {
             $words[] = $this->substr($word, 0, $start);
             $word = $this->substr($word, $start, $wordLength);
         }

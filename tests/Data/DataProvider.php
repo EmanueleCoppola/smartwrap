@@ -87,6 +87,32 @@ class DataProvider
                     'cut'      => true,
                     'swonly'   => true
                 ]
+            ],
+            [
+                [
+                    'input'    => 'heeeeeeeeeeeeeeereisaverylongword',
+                    'expected' => "heeeeeeeee\n" .
+                                  "eeeeeereis\n" .
+                                  "averylongw\n" .
+                                  "ord",
+                    'width'    => 10,
+                    'break'    => "\n",
+                    'cut'      => true,
+                    'swonly'   => false
+                ]
+            ],
+            [
+                [
+                    'input'    => 'heeeeeeeeeeeeeeereisaverylongword',
+                    'expected' => "heeeeeeeee\n" .
+                                  "eeeeeereis\n" .
+                                  "averylongw\n" .
+                                  "ord",
+                    'width'    => 10,
+                    'break'    => "\n",
+                    'cut'      => false,
+                    'swonly'   => true
+                ]
             ]
         ];
     }
