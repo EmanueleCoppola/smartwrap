@@ -2,27 +2,34 @@
 
 namespace EmanueleCoppola\SmartWrap;
 
+/**
+ * A class for wrapping text into lines with a specified width,
+ * supporting multibyte strings and optional word splitting.
+ */
 class SmartWrap
 {
+
     /**
-     * Computed lines.
+     * The computed lines after wrapping.
      *
-     * @var string[] $lines
+     * @var string[] Array of strings, each representing a wrapped line.
      */
     private $lines = [];
 
     /**
-     * A pointer that points to the last line of $lines.
+     * A pointer to the last line in the $lines array.
      *
-     * @var string $lastLine
+     * @var string Reference to the last line in the $lines array.
      */
     private $lastLine;
 
     /**
-     * This function will be called everytime
-     * the smartwrap() method is called.
+     * Resets the state of the class.
+     * Initializes the $lines array and adds an initial empty line.
+     *
+     * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         $this->lines = [];
         // Adds the first line.
@@ -30,15 +37,19 @@ class SmartWrap
     }
 
     /**
-     * Smart wraps a text.
+     * Wraps the given text into lines of the specified width.
      *
-     * @param string $text
-     * @param int $width
-     * @param string $break
-     * @param bool $cut
-     * @return string
+     * Words are split based on spaces or optionally by force if they exceed
+     * the width and $cut is set to true.
+     *
+     * @param string $text The input text to wrap.
+     * @param int $width The maximum width of a line. Defaults to 75.
+     * @param string $break The line break character(s). Defaults to "\n".
+     * @param bool $cut Whether to force split words that are longer than $width. Defaults to false.
+     *
+     * @return string The wrapped text with lines separated by the $break character(s).
      */
-    public function smartwrap(string $text, int $width = 75, string $break = "\n", bool $cut = false)
+    public function smartwrap(string $text, int $width = 75, string $break = "\n", bool $cut = false): string
     {
         $this->boot();
 
@@ -80,12 +91,13 @@ class SmartWrap
     }
 
     /**
-     * Multibyte substr function.
+     * Performs a multibyte-safe substring operation.
      *
-     * @param $string
-     * @param $start
-     * @param null $length
-     * @return string
+     * @param string $string The input string.
+     * @param int $start The starting position of the substring.
+     * @param int|null $length The length of the substring. Defaults to null, extracting to the end.
+     *
+     * @return string The extracted substring.
      */
     public static function substr($string, $start, $length = null)
     {
@@ -93,25 +105,27 @@ class SmartWrap
     }
 
     /**
-     * Function to tokenize a text into an array of words.
+     * Splits a text into an array of words based on spaces and newlines.
      *
-     * @param string $text
-     * @return string[]
+     * @param string $text The input text to tokenize.
+     *
+     * @return string[] An array of words.
      */
-    private function tokenizeText(string $text)
+    private function tokenizeText(string $text): array
     {
         return preg_split('/[\s\n]/', $text);
     }
 
     /**
-     * Function to tokenize a word into an array of sub-tokens.
+     * Splits a word into smaller chunks of the specified width.
      *
-     * @param string $word
-     * @param int $width
-     * @param int $start
-     * @return string[]
+     * @param string $word The input word to tokenize.
+     * @param int $width The maximum width of each chunk.
+     * @param int $start The starting position for tokenization. Defaults to 0.
+     *
+     * @return string[] An array of word chunks.
      */
-    private function tokenizeWord(string $word, int $width, int $start = 0)
+    private function tokenizeWord(string $word, int $width, int $start = 0): array
     {
         $wordLength = mb_strlen($word);
         $words = [];
@@ -141,25 +155,27 @@ class SmartWrap
     }
 
     /**
-     * Pushes a new line to the $lines array and moves
-     * the pointer to the last element of it.
+     * Adds a new line to the $lines array and updates the $lastLine pointer.
      *
-     * @param string|null $text
+     * @param string|null $text Optional text to initialize the new line. Defaults to an empty string.
+     *
+     * @return void
      */
-    private function addLine(string $text = null)
+    private function addLine(string $text = null): void
     {
         $this->lines[]  = $text ?: '';
         $this->lastLine = &$this->lines[count($this->lines) - 1];
     }
 
     /**
-     * Pushes some text to the last line.
+     * Appends text to the current line in the $lines array.
      *
-     * @param string|null $text
+     * @param string $text The text to append.
+     *
+     * @return void
      */
-    private function addText(string $text)
+    private function addText(string $text): void
     {
         $this->lastLine .= (mb_strlen($this->lastLine) === 0 ? '' : ' ') . $text;
     }
-
 }
