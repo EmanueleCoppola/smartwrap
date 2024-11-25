@@ -1,7 +1,13 @@
-# IDE/Editors
+# ide/editor
 .idea/
 .vscode/
 
 # Composer
-composer.lock
 vendor/
+composer.lock
+
+# phpunit
+.phpunit.result.cache
+
+# os
+.DS_Store
