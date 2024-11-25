@@ -1,15 +1,15 @@
 {
     "name": "emanuelecoppola/smartwrap",
     "description": "Smarter wordwrap for PHP",
-    "version": "0.0.3",
+    "version": "1.0.0",
     "type": "library",
     "license": "MIT",
     "require": {
-        "php": ">=7.0",
+        "php": ">=7.1",
         "ext-mbstring": "*"
     },
     "require-dev": {
-        "phpunit/phpunit": "^7.5.15"
+        "phpunit/phpunit": "^8.5"
     },
     "autoload": {
         "files": [
