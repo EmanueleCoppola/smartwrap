@@ -161,7 +161,7 @@ class SmartWrap
      *
      * @return void
      */
-    private function addLine(string $text = null): void
+    private function addLine(?string $text = null): void
     {
         $this->lines[]  = $text ?: '';
         $this->lastLine = &$this->lines[count($this->lines) - 1];
